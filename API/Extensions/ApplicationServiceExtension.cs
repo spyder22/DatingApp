@@ -18,6 +18,8 @@ namespace API.Extensions
 
             services.AddScoped<LogUserActivity>();
 
+            services.AddScoped<ILikesRepository,LikesRepository>();
+
             services.AddScoped<IPhotoService,PhotoService>();
 
             services.AddScoped<IUserRepository,UserRepository>();

@@ -10,6 +10,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs/operators';
 
+
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
@@ -32,8 +33,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 throw modalStateErrors.flat();
               }
-              else{
+              else if(typeof(error.error) === 'object'){
                 this.toastr.error(error.statusText,error.status);
+              }
+              else{
+                this.toastr.error(error.error, error.status);
               }
               break;
 
@@ -49,7 +53,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
               case 500:
                 const navigationExtras: NavigationExtras = {state:{error: error.error}};
-                this.router.navigateByUrl('/server-error');
+                this.router.navigateByUrl('/server-error',navigationExtras);
                 break;
 
               default:
